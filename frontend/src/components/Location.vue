@@ -1,29 +1,18 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
-import { getWeatherByLocation } from '../service/http';
-import { IWeather } from '../interfaces/IWeather';
-
-const country = ref<string>('');
-const neighboorhood = ref<string>('');
-const currentHour = ref<string>('');
-
-const getLocation = async () => {
-  return navigator.geolocation.getCurrentPosition(async ({
-    coords: {
-      latitude: lat, longitude: lon
-    }
-  }: GeolocationPosition) => {
-    const request = await getWeatherByLocation({ endpoint: 'getLocation', lat, lon });
-
-    const response: IWeather = await request.json();
-
-    country.value = response.country;
-    neighboorhood.value = response.name;
-    currentHour.value = response.currentHour;
-  });
-}
-
-onMounted(() => getLocation());
+defineProps({
+  country: {
+    required: true,
+    type: String
+  },
+  neighboorhood: {
+    required: true,
+    type: String
+  },
+  currentHour: {
+    required: true,
+    type: String
+  }
+})
 </script>
 
 <template>

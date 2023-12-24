@@ -1,39 +1,30 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
-import { IWeather } from '../interfaces/IWeather';
-import { getWeatherByLocation } from '../service/http';
-
-const temperature = ref<number>();
-const feelsLike = ref<number>();
-const minTemperature = ref<number>();
-const maxTemperature = ref<number>();
-const airPressure = ref<number>();
-const airHumidity = ref<number>();
-
-const getTemperature = async () => {
-  return navigator.geolocation.getCurrentPosition(async ({
-    coords: {
-      latitude: lat, longitude: lon
-    }
-  }: GeolocationPosition) => {
-    const request = await getWeatherByLocation({ endpoint: 'getLocation', lat, lon });
-
-    const {
-      temperature: {
-        temp, feels_like, temp_min, temp_max, pressure, humidity
-      }
-    }: IWeather = await request.json();
-
-    temperature.value = temp;
-    feelsLike.value = feels_like;
-    minTemperature.value = temp_min;
-    maxTemperature.value = temp_max;
-    airPressure.value = pressure;
-    airHumidity.value = humidity;
-  });
-}
-
-onMounted(() => getTemperature())
+  defineProps({
+    temperature: {
+      required: true,
+      type: Number,
+    },
+    feelsLike: {
+      required: true,
+      type: Number,
+    },
+    minTemperature: {
+      required: true,
+      type: Number,
+    },
+    maxTemperature: {
+      required: true,
+      type: Number,
+    },
+    airPressure: {
+      required: true,
+      type: Number,
+    },
+    airHumidity: {
+      required: true,
+      type: Number,
+    },
+  })
 </script>
 <template>
   <main class="column">
@@ -55,7 +46,7 @@ onMounted(() => getTemperature())
           Pressão do ar: <span> {{ airPressure }}hPa </span>
         </p>
         <p>
-          Percentual de Umidade: <span> {{ airHumidity }}% </span>
+          Umidade: <span> {{ airHumidity }}% </span>
         </p>
       </div>
       <span class="shadow">
