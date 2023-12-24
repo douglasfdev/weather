@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
-import { IWeather } from '../interfaces/IWeather';
+import { Description, IWeather } from '../interfaces/IWeather';
 import { getWeatherByLocation } from '../service/http';
 import Condition from './Condition.vue';
 import Location from './Location.vue';
@@ -15,6 +15,7 @@ const minTemperature = ref<number>(0);
 const maxTemperature = ref<number>(0);
 const airPressure = ref<number>(0);
 const airHumidity = ref<number>(0);
+const conditions = ref<Array<Description>>([]);
 
 const getLocation = async () => {
   return navigator.geolocation.getCurrentPosition(async ({
@@ -30,7 +31,8 @@ const getLocation = async () => {
       currentHour: currentTime,
       temperature: {
         temp, feels_like, temp_min, temp_max, pressure, humidity
-      }
+      },
+      description
     }: IWeather = await request.json();
 
     country.value = countryName;
@@ -42,6 +44,7 @@ const getLocation = async () => {
     maxTemperature.value = temp_max;
     airPressure.value = pressure;
     airHumidity.value = humidity;
+    conditions.value = description;
   });
 }
 
@@ -51,7 +54,7 @@ onMounted(() => getLocation());
 <template>
   <main class="section">
     <div class="column is-mobile">
-      <Condition />
+      <Condition :conditions="conditions" />
     </div>
     <section class="columns is-centered is-mobile">
       <Location

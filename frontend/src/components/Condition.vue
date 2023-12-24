@@ -1,27 +1,11 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
-import { Description, IWeather } from '../interfaces/IWeather';
-import { getWeatherByLocation } from '../service/http';
-
-const conditions = ref<Array<Description>>([]);
-
-const getCondition = async () => {
-  return navigator.geolocation.getCurrentPosition(async ({
-    coords: {
-      latitude: lat, longitude: lon
-    }
-  }: GeolocationPosition) => {
-    const request = await getWeatherByLocation({ endpoint: 'getLocation', lat, lon });
-
-    const { description }: IWeather = await request.json();
-
-    conditions.value = description;
-  });
-
-}
-
-onMounted(() => getCondition());
-
+import { Description } from '../interfaces/IWeather';
+defineProps({
+  conditions: {
+    required: true,
+    type: Array<Description>
+  }
+})
 </script>
 
 <template>
