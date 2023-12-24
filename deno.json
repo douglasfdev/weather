@@ -1,0 +1,5 @@
+{
+  "tasks": {
+    "dev": "APP_ENV=development deno run --allow-all --watch ./backend/src/index.js"
+  }
+}
