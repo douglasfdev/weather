@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
+import { onBeforeMount, ref } from 'vue';
 import { Description, IWeather } from '../interfaces/IWeather';
 import { getWeatherByLocation } from '../service/http';
 import Condition from './Condition.vue';
@@ -18,37 +18,31 @@ const airHumidity = ref<number>(0);
 const conditions = ref<Array<Description>>([]);
 
 const getLocation = async () => {
-  return navigator.geolocation.getCurrentPosition(async ({
-    coords: {
-      latitude: lat, longitude: lon
-    }
-  }: GeolocationPosition) => {
-    const request = await getWeatherByLocation({ endpoint: 'getLocation', lat, lon });
+  const request = await getWeatherByLocation<IWeather>({ endpoint: 'getLocation' });
 
-    const {
-      country: countryName,
-      name: neighboorhoodName,
-      currentHour: currentTime,
-      temperature: {
-        temp, feels_like, temp_min, temp_max, pressure, humidity
-      },
-      description
-    }: IWeather = await request.json();
+  const {
+    country: countryName,
+    name: neighboorhoodName,
+    currentHour: currentTime,
+    temperature: {
+      temp, feels_like, temp_min, temp_max, pressure, humidity
+    },
+    description,
+  } = await request.json();
 
-    country.value = countryName;
-    neighboorhood.value = neighboorhoodName;
-    currentHour.value = currentTime;
-    temperature.value = temp;
-    feelsLike.value = feels_like;
-    minTemperature.value = temp_min;
-    maxTemperature.value = temp_max;
-    airPressure.value = pressure;
-    airHumidity.value = humidity;
-    conditions.value = description;
-  });
+  country.value = countryName;
+  neighboorhood.value = neighboorhoodName;
+  currentHour.value = currentTime;
+  temperature.value = temp;
+  feelsLike.value = feels_like;
+  minTemperature.value = temp_min;
+  maxTemperature.value = temp_max;
+  airPressure.value = pressure;
+  airHumidity.value = humidity;
+  conditions.value = description;
 }
 
-onMounted(() => getLocation());
+onBeforeMount(() => getLocation());
 </script>
 
 <template>
@@ -57,23 +51,11 @@ onMounted(() => getLocation());
       <Condition :conditions="conditions" />
     </div>
     <section class="columns is-centered is-mobile">
-      <Location
-        :country="country"
-        :neighboorhood="neighboorhood"
-        :current-hour="currentHour"
-      />
-      <Temperature
-        :temperature="temperature"
-        :feels-like="feelsLike"
-        :min-temperature="minTemperature"
-        :max-temperature="maxTemperature"
-        :air-pressure="airPressure"
-        :air-humidity="airHumidity"
-      />
+      <Location :country="country" :neighboorhood="neighboorhood" :current-hour="currentHour" />
+      <Temperature :temperature="temperature" :feels-like="feelsLike" :min-temperature="minTemperature"
+        :max-temperature="maxTemperature" :air-pressure="airPressure" :air-humidity="airHumidity" />
     </section>
   </main>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>

@@ -1,9 +1,8 @@
-interface IUrlWeatherByLocation {
+import { IWeather } from '../interfaces/IWeather.ts';
+export interface IUrlWeatherByLocation {
   endpoint: string;
-  lat: number;
-  lon: number;
 }
 
-export const getWeatherByLocation = async ({ endpoint, lat, lon }: IUrlWeatherByLocation) => {
-  return await fetch(`http://localhost:8001/${endpoint}?lat=${lat}&lon=${lon}`)
+export async function getWeatherByLocation<T>({ endpoint, lat, lon }: IUrlWeatherByLocation) {
+  return await fetch(`http://localhost:8001/${endpoint}`) as T;
 };

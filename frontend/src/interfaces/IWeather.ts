@@ -6,6 +6,7 @@ export interface IWeather {
   country: string;
   name: string;
   currentHour: string;
+  json(): Promise<IWeather>
 }
 
 export interface Description {
