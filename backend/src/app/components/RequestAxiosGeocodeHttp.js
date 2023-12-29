@@ -1,20 +1,19 @@
 import axios from 'axios';
 import { env } from "../../common/configs/env.config.js";
 
-export class RequestAxiosHttp {
+export class RequestAxiosGeocodeHttp {
   constructor() {
     this.http = axios.create({
-      baseURL: env.parsed.WEATHER_URL,
+      baseURL: env.parsed.HEREGEOCODE_URL,
     });
   }
 
-  async get(url, params) {
+  async getGeocode(url, params) {
     try {
       const get = await this.http.get(url, {
         params: {
           ...params,
-          appid: env.parsed.WEATHER_API_KEY,
-          lang: 'pt_br'
+          apiKey: env.parsed.HEREGEOCODE_API_KEY,
         },
       });
 

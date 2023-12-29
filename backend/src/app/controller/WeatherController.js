@@ -7,8 +7,8 @@ class WeatherController {
    * @param {Response} res
    * @returns json
    */
-  async getWeatherByLocation(req, res) {
-    const getLatLon = await new WeatherService().getLocation(req.query);
+  async getWeatherByLocation(_req, res) {
+    const getLatLon = await new WeatherService().getLocation();
 
     return res.status(200).json(getLatLon);
   }

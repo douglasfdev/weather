@@ -1,22 +1,38 @@
-import { RequestAxiosHttp } from "../components/RequestAxiosHttp.js";
-// import xpto from "../../../xpto.json" assert { type : 'json' };
+import { RequestAxiosIpInfoHttp } from "../components/RequestAxiosIpInfo.js";
+import { RequestAxiosWeatherHttp } from "../components/RequestAxiosWeatherHttp.js";
 
 export class WeatherService {
   fahrenheitToCelsius = 273.15;
-  async getLocation({ lat, lon }) {
-    const { weather, main, sys, name } = await new RequestAxiosHttp().get(`weather`, { lat, lon });
+  async getLocation() {
+    const { loc } = await new RequestAxiosIpInfoHttp().getIp(
+      "json"
+    );
+
+    const [ latitude, longitude ] = loc.split(",");
+
+    const {
+      weather,
+      main: {
+        pressure,
+        humidity,
+        temp,
+        feels_like,
+        temp_min,
+        temp_max
+      },
+      sys,
+      name
+    } = await new RequestAxiosWeatherHttp().getWeather(`weather`, { lat: latitude, lon: longitude });
 
     const description = weather.map(w => ({
       main: w.main,
       description: w.description
     }));
 
-    const actualTemperatureToCelsius = main.temp - this.fahrenheitToCelsius;
-    const feelsLikeTemperatureToCelsius = main.feels_like - this.fahrenheitToCelsius;
-    const minimumTemperatureToCelsius = main.temp_min - this.fahrenheitToCelsius;
-    const maximumTemperatureToCelsius = main.temp_max - this.fahrenheitToCelsius;
-    const airPressure = main.pressure;
-    const humidity = main.humidity;
+    const actualTemperatureToCelsius = temp - this.fahrenheitToCelsius;
+    const feelsLikeTemperatureToCelsius = feels_like - this.fahrenheitToCelsius;
+    const minimumTemperatureToCelsius = temp_min - this.fahrenheitToCelsius;
+    const maximumTemperatureToCelsius = temp_max - this.fahrenheitToCelsius;
 
     return {
       description,
@@ -25,8 +41,8 @@ export class WeatherService {
         feels_like: Math.ceil(feelsLikeTemperatureToCelsius.toFixed(2)),
         temp_min: Math.ceil(minimumTemperatureToCelsius.toFixed(2)),
         temp_max: Math.ceil(maximumTemperatureToCelsius.toFixed(2)),
-        pressure: airPressure,
-        humidity: humidity
+        pressure,
+        humidity
       },
       sunrise: Intl.DateTimeFormat("pt-BR", {
         hour: "2-digit",
