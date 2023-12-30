@@ -9,6 +9,6 @@ Projeto visa mostrar a metereologia do tempo baseado na localidade do usuário
 Para iniciar o projeto server side(backend) basta rodar o comando `deno task dev` na pasta root, e para rodar o projeto client side(frontend) rodar o comando `cd frontend && deno task dev`
 
 ##### Features
-* Fazer a previsão baseada em 4 dias e na semana
-* Fazer a previsão para a semana
-* Pegar o bairro/cidade da pessoa pela localização
+- [x] Fazer a previsão baseada em vários dias na semana
+- [x] Pegar o bairro/cidade do usuário pela localização
+- [x] Mostrar a previsão baseada na localização do usuário
