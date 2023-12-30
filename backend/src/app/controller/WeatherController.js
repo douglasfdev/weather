@@ -24,8 +24,20 @@ class WeatherController {
 
     return res.status(200).json({
       lat,
-      lon
+      lon,
     });
+  }
+
+  /**
+   *
+   * @param {Request} req
+   * @param {Response} res
+   * @returns json
+   */
+  async getWeatherToFourDays(_req, res) {
+    const getWeatherToFourDays = await new WeatherService().getWeatherToFourDays();
+
+    return res.status(200).json(getWeatherToFourDays);
   }
 }
 

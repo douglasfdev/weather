@@ -1,19 +1,19 @@
-import { RequestAxiosGeocodeHttp } from "../components/RequestAxiosGeocodeHttp.js";
 import { RequestAxiosIpInfoHttp } from "../components/RequestAxiosIpInfo.js";
 
 export class GeocodeService {
-  async getLocalization({ at, search }) {
-    const { items } = await new RequestAxiosGeocodeHttp()
-      .getGeocode("discover", { at, q: search });
+  async getLocalization() {
+    const { ip, city, region, country, loc } = await new RequestAxiosIpInfoHttp().getIp("json")
 
-    const { ip, city, region, country } = await new RequestAxiosIpInfoHttp().getIp("json")
+    const splitLoc = loc.split(",");
+    const [ lat, lon ] = splitLoc;
 
     return {
-      items,
       ip,
       city,
       region,
-      country
+      country,
+      lat,
+      lon,
     }
   }
 }

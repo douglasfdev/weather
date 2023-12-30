@@ -3,12 +3,13 @@ import { RequestAxiosWeatherHttp } from "../components/RequestAxiosWeatherHttp.j
 
 export class WeatherService {
   fahrenheitToCelsius = 273.15;
+
   async getLocation() {
     const { loc } = await new RequestAxiosIpInfoHttp().getIp(
       "json"
     );
 
-    const [ latitude, longitude ] = loc.split(",");
+    const [ lat, lon ] = loc.split(",");
 
     const {
       weather,
@@ -22,7 +23,7 @@ export class WeatherService {
       },
       sys,
       name
-    } = await new RequestAxiosWeatherHttp().getWeather(`weather`, { lat: latitude, lon: longitude });
+    } = await new RequestAxiosWeatherHttp().getWeather(`weather`, { lat, lon });
 
     const description = weather.map(w => ({
       main: w.main,
@@ -60,5 +61,46 @@ export class WeatherService {
         second: "2-digit",
       }).format(new Date()),
     };
+  }
+
+  async getWeatherToFourDays() {
+      const { loc } = await new RequestAxiosIpInfoHttp().getIp("json");
+
+      const [ lat, lon ] = loc.split(",");
+
+      const { list } = await new RequestAxiosWeatherHttp().getWeather(`forecast`, { lat, lon });
+
+      return list?.map(l => {
+        const {
+          main : {
+            temp,
+            feels_like,
+            temp_min,
+            temp_max,
+            pressure,
+            humidity,
+          },
+          weather,
+        } = l;
+
+        const actualTemperatureToCelsius = temp - this.fahrenheitToCelsius;
+        const feelsLikeTemperatureToCelsius = feels_like - this.fahrenheitToCelsius;
+        const minimumTemperatureToCelsius = temp_min - this.fahrenheitToCelsius;
+        const maximumTemperatureToCelsius = temp_max - this.fahrenheitToCelsius;
+
+        const [climate] = weather.map(w => w.description);
+
+        return {
+          climate: `${climate.charAt(0).toUpperCase()}${climate.slice(1)}`,
+          forecast: {
+            temp: Math.ceil(actualTemperatureToCelsius.toFixed(2)),
+            feels_like: Math.ceil(feelsLikeTemperatureToCelsius.toFixed(2)),
+            temp_min: Math.ceil(minimumTemperatureToCelsius.toFixed(2)),
+            temp_max: Math.ceil(maximumTemperatureToCelsius.toFixed(2)),
+            pressure,
+            humidity
+          }
+        }
+      });
   }
 }

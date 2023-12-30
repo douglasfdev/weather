@@ -8,10 +8,7 @@ class GeocodeController {
    * @returns json
    */
   async getLocalization(req, res) {
-    const { lat, lon, search } = req.query;
-    const concatLocalization = new String().concat(`${lat},${lon}`);
-
-    const getLocalization = await new GeocodeService().getLocalization({ at: concatLocalization, search });
+    const getLocalization = await new GeocodeService().getLocalization();
     return res.status(200).json(getLocalization);
   }
 }
