@@ -64,7 +64,7 @@ export class WeatherService {
   }
 
   async getWeatherToFourDays() {
-      const { loc } = await new RequestAxiosIpInfoHttp().getIp("json");
+      const { loc, region, country } = await new RequestAxiosIpInfoHttp().getIp("json");
 
       const [ lat, lon ] = loc.split(",");
 
@@ -92,6 +92,8 @@ export class WeatherService {
 
         return {
           climate: `${climate.charAt(0).toUpperCase()}${climate.slice(1)}`,
+          region,
+          country,
           forecast: {
             temp: Math.ceil(actualTemperatureToCelsius.toFixed(2)),
             feels_like: Math.ceil(feelsLikeTemperatureToCelsius.toFixed(2)),
