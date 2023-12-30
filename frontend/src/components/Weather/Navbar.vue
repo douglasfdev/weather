@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <nav class="navbar" role="navigation" aria-label="main navigation">
+    <nav class="navbar is-dark" role="navigation" aria-label="main navigation">
       <router-link to="/weather" class="navbar-menu">
         <div class="navbar-start">
           <div class="navbar-item">
@@ -8,10 +8,10 @@
           </div>
         </div>
       </router-link>
-      <router-link to="/forecastToFourDays" class="navbar-menu">
+      <router-link to="/multdayForecast" class="navbar-menu">
         <div class="navbar-start">
           <div class="navbar-item">
-            Previsão de 4 dias
+            Previsão para vários dias
           </div>
         </div>
       </router-link>

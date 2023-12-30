@@ -7,7 +7,7 @@ const routes: Array<RouteConfig> = [
     component: () => import('../views/WeatherView.vue')
   },
   {
-    path: '/forecastToFourDays',
+    path: '/multdayForecast',
     name: 'forecastTo4Days',
     component: () => import('../views/ForecastView.vue')
   }

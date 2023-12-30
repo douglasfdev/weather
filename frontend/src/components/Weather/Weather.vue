@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { onBeforeMount, ref } from 'vue';
-import { Description, IWeather } from '../interfaces/IWeather';
-import { getWeatherByLocation } from '../service/http';
+import { Description, IWeather } from '../../interfaces/IWeather';
+import { getWeatherByLocation } from '../../service/http';
 import Condition from './Condition.vue';
 import Location from './Location.vue';
 import Temperature from './Temperature.vue';
@@ -18,7 +18,7 @@ const airHumidity = ref<number>(0);
 const conditions = ref<Array<Description>>([]);
 
 const getLocation = async () => {
-  const request = await getWeatherByLocation<IWeather>({ endpoint: 'getLocation' });
+  const request = await getWeatherByLocation({ endpoint: 'getLocation' });
 
   const {
     country: countryName,
@@ -28,7 +28,7 @@ const getLocation = async () => {
       temp, feels_like, temp_min, temp_max, pressure, humidity
     },
     description,
-  } = await request.json();
+  }: IWeather = await request.json();
 
   country.value = countryName;
   neighboorhood.value = neighboorhoodName;

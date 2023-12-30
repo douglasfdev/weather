@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Description } from '../interfaces/IWeather';
+import { Description } from '../../interfaces/IWeather';
 defineProps({
   conditions: {
     required: true,

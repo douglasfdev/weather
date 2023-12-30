@@ -1,9 +1,9 @@
 <script setup lang="ts">
-
+import Forecast from '../components/Forecast/Forecast.vue';
 </script>
 
 <template>
-  <h1>
-    Previsão de 4 dias
-  </h1>
+  <main>
+    <Forecast />
+  </main>
 </template>

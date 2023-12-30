@@ -1,12 +1,9 @@
 <script setup lang="ts">
-import Weather from '../components/Weather.vue';
+import Weather from '../components/Weather/Weather.vue';
 </script>
 
 <template>
-  <main class="bg-dark">
+  <main>
     <Weather />
   </main>
 </template>
-
-<style scoped>
-</style>
