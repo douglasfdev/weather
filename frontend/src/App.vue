@@ -1,13 +1,7 @@
-<script setup lang="ts">
-// This starter template is using Vue 3 <script setup> SFCs
-// Check out https://vuejs.org/api/sfc-script-setup.html#script-setup
-import Weather from './components/Weather.vue'
-</script>
-
 <template>
-  <main class="container">
-    <Weather />
-  </main>
+  <Navbar />
 </template>
 
-<style scoped></style>
+<script setup lang="ts">
+import Navbar from './components/Navbar.vue';
+</script>

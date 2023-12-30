@@ -46,16 +46,19 @@ onBeforeMount(() => getLocation());
 </script>
 
 <template>
-  <main class="section">
-    <div class="column is-mobile">
-      <Condition :conditions="conditions" />
-    </div>
-    <section class="columns is-centered is-mobile">
-      <Location :country="country" :neighboorhood="neighboorhood" :current-hour="currentHour" />
-      <Temperature :temperature="temperature" :feels-like="feelsLike" :min-temperature="minTemperature"
-        :max-temperature="maxTemperature" :air-pressure="airPressure" :air-humidity="airHumidity" />
-    </section>
-  </main>
+      <main class="container">
+        <section class="section">
+          <div class="column is-mobile">
+            <Condition :conditions="conditions" />
+          </div>
+          <section class="columns is-centered is-mobile">
+            <Location :country="country" :neighboorhood="neighboorhood" :current-hour="currentHour" />
+            <Temperature :temperature="temperature" :feels-like="feelsLike" :min-temperature="minTemperature"
+              :max-temperature="maxTemperature" :air-pressure="airPressure" :air-humidity="airHumidity" />
+          </section>
+        </section>
+      </main>
 </template>
 
-<style scoped></style>
+<style scoped>
+</style>
