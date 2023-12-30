@@ -1,6 +1,5 @@
 import axios from "axios";
 import { env } from "../../common/configs/env.config.js";
-
 export class RequestAxiosIpInfoHttp {
   constructor() {
     this.http = axios.create({
@@ -10,15 +9,15 @@ export class RequestAxiosIpInfoHttp {
 
   async getIp(url) {
     try {
-      const get = await this.http.get(url, {
+      const { data } = await this.http.get(url, {
         params: {
-          token: env.parsed.IPINFO_API_KEY,
+          token: env.IPINFO_API_KEY,
         },
       });
 
-      return get.data;
+      return data;
     } catch (e) {
-      console.log(e.response);
+      console.log(e.response.error);
     }
   }
 }

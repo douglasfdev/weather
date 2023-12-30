@@ -10,7 +10,7 @@ export class RequestAxiosWeatherHttp {
 
   async getWeather(url, params) {
     try {
-      const get = await this.http.get(url, {
+      const { data } = await this.http.get(url, {
         params: {
           ...params,
           appid: env.parsed.WEATHER_API_KEY,
@@ -18,7 +18,7 @@ export class RequestAxiosWeatherHttp {
         },
       });
 
-      return get.data
+      return data
     } catch (e) {
       console.log(e.response)
     }

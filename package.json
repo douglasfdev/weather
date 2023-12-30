@@ -1,0 +1,5 @@
+{
+  "scripts": {
+    "dev": "set APP_ENV=development && node --watch backend/src/index.js"
+  }
+}
